@@ -14,8 +14,9 @@ This plugin is compatible with plugman.  To install, run the following from your
 <h3>Configure DataWedge:</h3>
 You'll need to first create a Profile in your DataWedge Application to Broadcast an intent on scan/magstripe events as applicable.  NOTE: you need to choose an action to publish.  By default, this plugin will listen for: _"com.bluefletch.motorola.datawedge.ACTION"_
 
-```The DataWedge User Guid is located here: https://launchpad.motorolasolutions.com/documents/dw_user_guide.html
-Intent configuration: https://launchpad.motorolasolutions.com/documents/dw_user_guide.html#_intent_output```
+The DataWedge User Guide is located here: `https://launchpad.motorolasolutions.com/documents/dw_user_guide.html`
+
+Intent configuration: `https://launchpad.motorolasolutions.com/documents/dw_user_guide.html#_intent_output`
 
 
 <h3>To Use:</h3>
@@ -24,6 +25,7 @@ Intent configuration: https://launchpad.motorolasolutions.com/documents/dw_user_
 ```
    document.addEventListener("deviceready", function(){ 
       if (window.datawedge) {
+      	 //datawedge.start(); //uses default of "com.bluefletch.motorola.datawedge.ACTION"
          datawedge.start("com.yourintent.whatever_you_configured");
       }
    });
