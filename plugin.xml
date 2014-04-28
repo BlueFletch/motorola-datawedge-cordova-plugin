@@ -6,11 +6,8 @@
     <name>Motorola Cordova Plugin</name>
 
 
-    <js-module src="www/barcodescanner.js" name="MotorolaBarcodeScanner">
-        <clobbers target="motorolaBarcodeScanner" />
-    </js-module>
-    <js-module src="www/magstripe.js" name="MotorolaMagStripeReader">
-        <clobbers target="motorolaMagstripe" />
+    <js-module src="www/datawedge.js" name="MotorolaDataWedgePlugin">
+        <clobbers target="datawedge" />
     </js-module>
 
     <!-- android -->
