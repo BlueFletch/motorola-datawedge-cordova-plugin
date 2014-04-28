@@ -25,7 +25,7 @@ Intent configuration: `https://launchpad.motorolasolutions.com/documents/dw_user
 ```
    document.addEventListener("deviceready", function(){ 
       if (window.datawedge) {
-      	 //datawedge.start(); //uses default of "com.bluefletch.motorola.datawedge.ACTION"
+      	 //datawedge.start(); //uses default
          datawedge.start("com.yourintent.whatever_you_configured");
       }
    });
