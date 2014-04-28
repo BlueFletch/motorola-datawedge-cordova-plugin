@@ -78,7 +78,7 @@ Intent configuration: `https://launchpad.motorolasolutions.com/documents/dw_user
 =============
 <h3>More API options:</h3>
 
-<h5>Data Wedge<h5>
+<h5>Data Wedge</h5>
 * Switch Profile: if you need to change DataWedge Profiles (ie, to disable the scanner buttons or to apply rules to data, etc), call `datawedge.swithProfile('DisabledScannerButton')`
 
 <h5>Scanner:</h5>
