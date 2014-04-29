@@ -1,7 +1,7 @@
 Cordova Motorola DataWedge Plugin
 ============
 
-This is a Cordova/Phonegap plugin to interact with Motorola ruggedized devices' Barcode Scanners and Magnetic Stripe Readers (eg, ET1, MC55, MC70).  The plugin works by interacting with the "DataWedge" application configured to output scan events.
+This is a Cordova/Phonegap plugin to interact with Motorola ruggedized devices' Barcode Scanners and Magnetic Stripe Readers (eg, ET1, MC55, MC70).  The plugin works by interacting with the "DataWedge" application configured to output scan and magstripe events.
 
 =============
 
@@ -52,10 +52,10 @@ Intent configuration: `https://launchpad.motorolasolutions.com/documents/dw_user
            //read track 1
            if (tracks[0]) {
               //track 1 uses carets as dividers
-           	  track1 = tracks[0].split('^');
+              track1 = tracks[0].split('^');
               
-	          var cc = {
-                 number : track1[0].substr(2),
+	      var cc = {
+                 number : track1[0].substr(2), //strip leading %B
                  name : track1[1].trim(),
                  expr : '20' + track1[2].substr(0,2) + '-' + track1[2].substr(2,2)
               };
@@ -68,7 +68,7 @@ Intent configuration: `https://launchpad.motorolasolutions.com/documents/dw_user
               //TODO: handle track 2
            } 
            else {
-           	  //ERROR: track 3 almost never has anything in it
+              //ERROR: track 3 almost never has anything in it
            }
 		
        });
