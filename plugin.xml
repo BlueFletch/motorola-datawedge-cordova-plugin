@@ -6,15 +6,15 @@
     <name>Motorola Cordova Plugin</name>
 
 
-    <js-module src="www/datawedge.js" name="MotorolaDataWedgePlugin">
+    <js-module src="www/datawedge.js" name="MotorolaDataWedge">
         <clobbers target="datawedge" />
     </js-module>
 
     <!-- android -->
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="MotorolaDataWedgePlugin" >
-                <param name="android-package" value="com.bluefletch.motorola.plugin.MotorolaDataWedgePlugin"/>
+            <feature name="MotorolaDataWedge" >
+                <param name="android-package" value="com.bluefletch.motorola.plugin.MotorolaDatawedgePlugin"/>
             </feature>
         </config-file>
          <config-file target="AndroidManifest.xml" parent="/manifest/application">
@@ -34,7 +34,7 @@
         <source-file src="lib/android/com/bluefletch/motorola/BarcodeScan.java" target-dir="src/com/bluefletch/motorola" />
         <source-file src="lib/android/com/bluefletch/motorola/ScanCallback.java" target-dir="src/com/bluefletch/motorola" />
         <source-file src="lib/android/com/bluefletch/motorola/DataWedgeIntentHandler.java" target-dir="src/com/bluefletch/motorola" />
-        <source-file src="src/android/com/bluefletch/motorola/plugin/MotorolaDataWedgePlugin.java" target-dir="src/com/bluefletch/motorola/plugin" />
+        <source-file src="src/android/com/bluefletch/motorola/plugin/MotorolaDatawedgePlugin.java" target-dir="src/com/bluefletch/motorola/plugin" />
     </platform>
 
 </plugin>

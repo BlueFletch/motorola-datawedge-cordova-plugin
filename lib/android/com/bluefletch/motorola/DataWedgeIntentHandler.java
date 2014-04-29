@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class DataWedgeIntentHandler {
@@ -24,11 +25,13 @@ public class DataWedgeIntentHandler {
 
     protected Context applicationContext;
 
-    protected string dataWedgeAction = "com.bluefletch.motorola.datawedge.ACTION";
+    protected String dataWedgeAction = "com.bluefletch.motorola.datawedge.ACTION";
     /**
     * This function must be called with the intent Action as configured in the DataWedge Application
     **/
-    public void setDataWedgeIntentAction(string action){
+    public void setDataWedgeIntentAction(String action){
+        Log.i(TAG, "Setting data wedge intent to " + action);
+        if (action == null || "".equals(action)) return;
         this.dataWedgeAction = action;
     }
 
@@ -57,7 +60,7 @@ public class DataWedgeIntentHandler {
                 return;
             }
 
-            Log.i(TAG, "Making start plugin intent registration calls");
+            Log.i(TAG, "Register for Datawedge intent: " + dataWedgeAction);
 
             applicationContext.registerReceiver(dataReceiver, new IntentFilter(dataWedgeAction));
 
@@ -121,7 +124,7 @@ public class DataWedgeIntentHandler {
     }
 
     private static String TRACK_PREFIX_FORMAT = "com.motorolasolutions.emdk.datawedge.msr_track%d";
-    private static String TRACK_STATUS_FORMAT = "com.motorolasolutions.emdk.datawedge.msr_track%d_status"
+    private static String TRACK_STATUS_FORMAT = "com.motorolasolutions.emdk.datawedge.msr_track%d_status";
     /**
      * Receiver to handle receiving data from intents
      */
@@ -145,15 +148,16 @@ public class DataWedgeIntentHandler {
                         return;
                     }
 
-                    List<String> tracks = new ArrayList<String>(3);
+                    List<String> tracks = new ArrayList<String>();
 
                     for (int i=0; i<=2; i++) {
                         byte[] trackData = intent.getByteArrayExtra(String.format(TRACK_PREFIX_FORMAT, i+1));
-                        int trackStatus = intent.getIntExtra(String.format(TRACK_STATUS_FORMAT, i+1));
+                        int trackStatus = intent.getIntExtra(String.format(TRACK_STATUS_FORMAT, i+1),0);
                         
-                        tracks[i] = null;//prefill with null
-                        if (trackStatus == 0) {//0 is valid
-                            tracks[i] = new String(trackData).trim();
+                        if (trackStatus == 1) {//1 is valid
+                            tracks.add(new String(trackData).trim());
+                        } else {
+                            tracks.add(null);//prefill with null
                         }
                     }
                     magstripeCallback.execute(tracks);

@@ -18,7 +18,11 @@ function DataWedge() {
  *       Defaults to: "com.bluefletch.motorola.datawedge.ACTION";
  */
 DataWedge.prototype.start = function (intentAction) {
-    exec(successCallback, null, 'MotorolaDataWedge', 'start', [intentAction]);
+    var args = [];
+    if (intentAction) {
+        args[0] = intentAction;
+    }
+    exec(null, null, 'MotorolaDataWedge', 'start', args);
 };
 /**
  * Turn off DataWedge plugin
@@ -32,7 +36,10 @@ DataWedge.prototype.stop = function () {
  * Activate a different profile for the data wedge.  For instance, to enable data processing rules
  */
 DataWedge.prototype.switchProfile = function (profileName) {
-
+    if (!profileName)  {
+        console.log("DataWedge.switchProfile did not include a profile.  A profile name is required.");
+        return;
+    }
     exec(null, null, 'MotorolaDataWedge', 'switchProfile', [profileName]);
 };
 

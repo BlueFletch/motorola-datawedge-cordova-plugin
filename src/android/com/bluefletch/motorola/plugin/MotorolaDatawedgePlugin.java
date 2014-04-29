@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 import com.bluefletch.motorola.BarcodeScan;
 import com.bluefletch.motorola.DataWedgeIntentHandler;
@@ -43,13 +44,18 @@ public class MotorolaDatawedgePlugin extends CordovaPlugin {
                 @Override
                 public void execute(BarcodeScan scan) {
                     Log.i(TAG, "Scan result [" + scan.LabelType + "-" + scan.Barcode + "].");
-
-                    JSONObject obj = new JSONObject();
-                    obj.put("type", scan.LabelType);
-                    obj.put("barcode", scan.Barcode);
-                    PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, obj);
-                    pluginResult.setKeepCallback(true);
-                    callbackContext.sendPluginResult(pluginResult);
+                    
+                    try {
+                        JSONObject obj = new JSONObject();
+                        obj.put("type", scan.LabelType);
+                        obj.put("barcode", scan.Barcode);
+                        PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, obj);
+                        pluginResult.setKeepCallback(true);
+                        callbackContext.sendPluginResult(pluginResult);
+                    } catch(JSONException e){
+                        Log.e(TAG, "Error building json object", e);
+                        
+                    }
                 }
             });
         }
@@ -70,7 +76,7 @@ public class MotorolaDatawedgePlugin extends CordovaPlugin {
 
         //register for magstripe callbacks
         else if ("magstripe.register".equals(action)){
-             wedge.setStripeReadCallback(new ScanCallback<List<String>>() {
+             wedge.setMagstripeReadCallback(new ScanCallback<List<String>>() {
                 @Override
                 public void execute(List<String> result) {
                     Log.i(TAG, "Magstripe result [" + result + "].");
@@ -83,7 +89,7 @@ public class MotorolaDatawedgePlugin extends CordovaPlugin {
             });
         }
         else if("magstripe.unregister".equals(action)) {
-            wedge.setStripeReadCallback(null);
+            wedge.setMagstripeReadCallback(null);
             if (!wedge.hasListeners()) {
                 wedge.stop();
             }
@@ -91,7 +97,7 @@ public class MotorolaDatawedgePlugin extends CordovaPlugin {
 
         //register for plugin callbacks
         else if ("switchProfile".equals(action)){
-            wedge.switchProfile(args.getString(0))
+            wedge.switchProfile(args.getString(0));
         }
 
         else if ("stop".equals(action)){
@@ -107,7 +113,9 @@ public class MotorolaDatawedgePlugin extends CordovaPlugin {
             if (args.length() > 0) {
                 intentAction = args.getString(0);  
             } 
-            if (intentAction != null && intentAction.length > 0) {
+            if (intentAction != null && intentAction.length() > 0) {
+                Log.i(TAG, "Intent action length  " + intentAction.length());
+
                 wedge.setDataWedgeIntentAction(intentAction);
             }
             wedge.start();
