@@ -4,7 +4,8 @@
            id="com.bluefletch.motorola"
       version="0.1.0">
     <name>Motorola Cordova Plugin</name>
-
+   
+    <dependency id="org.apache.cordova.network-information" url="https://git-wip-us.apache.org/repos/asf/cordova-plugin-network-information.git" />
 
     <js-module src="www/datawedge.js" name="MotorolaDataWedge">
         <clobbers target="datawedge" />
