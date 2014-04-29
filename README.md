@@ -12,7 +12,7 @@ This plugin is compatible with plugman.  To install, run the following from your
 ==============
 
 <h3>Configure DataWedge:</h3>
-You'll need to first create a Profile in your DataWedge Application to Broadcast an intent on scan/magstripe events as applicable.  NOTE: you need to choose an action to publish.  By default, this plugin will listen for: _"com.bluefletch.motorola.datawedge.ACTION"_
+You'll need to first create a Profile in your DataWedge Application to *Broadcast* an intent on scan/magstripe events as applicable.  NOTE: you need to choose an action to publish.  By default, this plugin will listen for: _"com.bluefletch.motorola.datawedge.ACTION"_
 
 The DataWedge User Guide is located here: `https://launchpad.motorolasolutions.com/documents/dw_user_guide.html`
 
