@@ -55,7 +55,7 @@ Intent configuration: `https://launchpad.motorolasolutions.com/documents/dw_user
            	  track1 = tracks[0].split('^');
               
 	          var cc = {
-                 number : track1[0].substr(1),
+                 number : track1[0].substr(2),
                  name : track1[1].trim(),
                  expr : '20' + track1[2].substr(0,2) + '-' + track1[2].substr(2,2)
               };
