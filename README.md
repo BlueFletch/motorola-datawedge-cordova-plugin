@@ -54,7 +54,7 @@ Intent configuration: `https://launchpad.motorolasolutions.com/documents/dw_user
               //track 1 uses carets as dividers
               track1 = tracks[0].split('^');
               
-	      var cc = {
+              var cc = {
                  number : track1[0].substr(2), //strip leading %B
                  name : track1[1].trim(),
                  expr : '20' + track1[2].substr(0,2) + '-' + track1[2].substr(2,2)
