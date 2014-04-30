@@ -1,7 +1,7 @@
 Cordova Motorola DataWedge Plugin
 ============
 
-This is a Cordova/Phonegap plugin to interact with Motorola ruggedized devices' Barcode Scanners and Magnetic Stripe Readers (eg, ET1, MC55, MC70).  The plugin works by interacting with the "DataWedge" application configured to output scan and magstripe events.
+This is a Cordova/Phonegap plugin to interact with Motorola ruggedized devices' Barcode Scanners and Magnetic Stripe Readers (eg, ET1, MC40, TC55).  The plugin works by interacting with the "DataWedge" application configured to output scan and magstripe events.
 
 =============
 
