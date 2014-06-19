@@ -133,6 +133,12 @@ public class MotorolaDatawedgePlugin extends CordovaPlugin {
         wedge.stop();
     }
 
+    @Override
+    public void onNewIntent(Intent intent) {
+        
+        Log.i(TAG, "Got inbound intent  " + intent.getAction());
+        wedge.handleIntent(intent);
+    }
 
     /**
     * Always resume the current activity

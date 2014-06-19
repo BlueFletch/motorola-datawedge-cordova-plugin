@@ -12,13 +12,20 @@ This plugin is compatible with plugman.  To install, run the following from your
 ==============
 
 <h3>Configure DataWedge:</h3>
-You'll need to first create a Profile in your DataWedge Application to **Broadcast** an intent on scan/magstripe events as applicable.  NOTE: you need to choose an action to publish.  By default, this plugin will listen for: _"com.bluefletch.motorola.datawedge.ACTION"_
-
-You'll also need to associate your app to the DataWedge profile (if you don't use the Default (0) profile). Configure this under `(Your profile) > Associated apps > New app/activity (menu button) > (Select your app)`
+You have two options to interact with the current version of the DataWedge:
+1. Broadcast an intent from the Default (0) profile.  This can be a custom action of your choosing.
+2. Create a custom profile associated to your app, and send a "startActivity" intent.  This must use the default plugin action: _"com.bluefletch.motorola.datawedge.ACTION"_ and default category: _"android.intent.category.DEFAULT"_.
 
 The DataWedge User Guide is located here: `https://launchpad.motorolasolutions.com/documents/dw_user_guide.html`
-
 Intent configuration: `https://launchpad.motorolasolutions.com/documents/dw_user_guide.html#_intent_output`
+
+Special configuration for option 2:
+1. You'll need to first create a Profile in your DataWedge Application to run **startActivity** for an intent on scan/magstripe events as applicable.  NOTE: you MUST set the action to: _"com.bluefletch.motorola.datawedge.ACTION"_ and category to: _"android.intent.category.DEFAULT"_
+2. You'll also need to associate your app to the DataWedge profile. Configure this under `(Your profile) > Associated apps > New app/activity (menu button) > (Select your app)`
+3. Lastly, you need to set your application to be "singleTop" in Cordova.  This will make sure each scan doesn't launch a new instance of your app. Add the following to your config.xml: 
+```<preference name="AndroidLaunchMode" value="singleTop" />```
+
+
 
 
 <h3>To Use:</h3>
@@ -27,8 +34,8 @@ Intent configuration: `https://launchpad.motorolasolutions.com/documents/dw_user
 ```
    document.addEventListener("deviceready", function(){ 
       if (window.datawedge) {
-      	 //datawedge.start(); //uses default
-         datawedge.start("com.yourintent.whatever_you_configured");
+      	 datawedge.start(); //uses default
+         //datawedge.start("com.yourintent.whatever_you_configured_to_broadcast_in_default_profile");
       }
    });
 ```

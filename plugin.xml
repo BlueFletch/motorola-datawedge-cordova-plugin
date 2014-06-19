@@ -4,7 +4,8 @@
            id="com.bluefletch.motorola"
       version="0.1.0">
     <name>Motorola Cordova Plugin</name>
-   
+
+
     <js-module src="www/datawedge.js" name="MotorolaDataWedge">
         <clobbers target="datawedge" />
     </js-module>
@@ -16,19 +17,12 @@
                 <param name="android-package" value="com.bluefletch.motorola.plugin.MotorolaDatawedgePlugin"/>
             </feature>
         </config-file>
-         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <!--
-             * This class is triggered upon event by the DataWedge Barcode Scanner or Magstripe reader.  
-             * DataWedge must be configured to match the intent parameters below
-            * NOTE: this feature is not built, but would allow a specific app to launch in result of a barcode scan.
+         <config-file target="AndroidManifest.xml" parent="/*/application/activity">
+           <intent-filter>
+                <action android:name="com.bluefletch.motorola.datawedge.ACTION" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
             
-            <receiver android:name="com.bluefletch.motorola.plugin.DataWedgeIntentReceiver" >
-                <intent-filter>
-                    <action android:name="com.motorolasolutions.emdk.datawedge.action" />
-                    <category android:name="android.intent.category.DEFAULT" />
-                </intent-filter>
-            </receiver>
-            -->
         </config-file>
         <source-file src="lib/android/com/bluefletch/motorola/BarcodeScan.java" target-dir="src/com/bluefletch/motorola" />
         <source-file src="lib/android/com/bluefletch/motorola/ScanCallback.java" target-dir="src/com/bluefletch/motorola" />

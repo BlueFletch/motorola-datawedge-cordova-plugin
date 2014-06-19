@@ -25,7 +25,8 @@ public class DataWedgeIntentHandler {
 
     protected Context applicationContext;
 
-    protected String dataWedgeAction = "com.bluefletch.motorola.datawedge.ACTION";
+    protected static String DEFAULT_ACTION = "com.bluefletch.motorola.datawedge.ACTION";
+    protected String dataWedgeAction = DEFAULT_ACTION;
     /**
     * This function must be called with the intent Action as configured in the DataWedge Application
     **/
@@ -120,6 +121,12 @@ public class DataWedgeIntentHandler {
             profileIntent.putExtra("com.motorolasolutions.emdk.datawedge.api.EXTRA_PROFILENAME", profile);
 
             applicationContext.sendBroadcast(profileIntent);
+        }
+    }
+
+    public void handleIntent(Intent intent){
+        if (intent != null && intent.getAction().equals(DEFAULT_ACTION)) {
+            dataReceiver.onReceive(applicationContext, intent);
         }
     }
 
