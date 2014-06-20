@@ -24,7 +24,7 @@ Intent configuration: `https://launchpad.motorolasolutions.com/documents/dw_user
 Special configuration for option 2:
 
 1. You'll need to first create a Profile in your DataWedge Application to run **startActivity** for an intent on scan/magstripe events as applicable.  NOTE: you MUST set the action to: _"com.bluefletch.motorola.datawedge.ACTION"_ and category to EMPTY/BLANK
-2. Associate your app to the DataWedge profile so it can be properly launched. Configure this under `(Your profile) > Associated apps > New app/activity (menu button) > (Select your app)`
+2. Associate your app to the DataWedge profile so it loads with your app. Configure this under `(Your profile) > Associated apps > New app/activity (menu button) > (Select your app)`
 3. Lastly, you need to set your application to be "singleTop" in Cordova.  This will make sure each scan doesn't launch a new instance of your app. Add the following to your config.xml: 
 ```<preference name="AndroidLaunchMode" value="singleTop" />```
 
