@@ -20,6 +20,7 @@
          <config-file target="AndroidManifest.xml" parent="/*/application/activity">
            <intent-filter>
                 <action android:name="com.bluefletch.motorola.datawedge.ACTION" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             
         </config-file>
