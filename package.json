@@ -1,0 +1,17 @@
+{
+  "name": "motorola-datawedge-cordova-plugin-master",
+  "version": "0.1.0",
+  "description": "Cordova Motorola DataWedge Plugin ============",
+  "cordova": {
+    "id": "com.bluefletch.motorola",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "datawedge",
+    "cordova-android"
+  ],
+  "author": "Bluefletch LLC",
+  "license": "Apache 2.0"
+}
