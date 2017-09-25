@@ -44,6 +44,15 @@ DataWedge.prototype.switchProfile = function (profileName) {
 };
 
 
+
+DataWedge.prototype.importProfile = function (uri) {
+    if (!uri)  {
+        console.log("DataWedge.importProfile did not include a uri.  A uri is required.");
+        return;
+    }
+    exec(null, null, 'MotorolaDataWedge', 'importProfile', [uri]);
+};
+
 /**
  * Register a callback for scan events.  This function will be called when barcdoes are read
  */

@@ -5,8 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
+import android.net.Uri;
 
-
+import org.apache.cordova.CordovaResourceApi;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
@@ -21,6 +22,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
 
 import com.bluefletch.motorola.BarcodeScan;
 import com.bluefletch.motorola.DataWedgeIntentHandler;
@@ -28,13 +33,23 @@ import com.bluefletch.motorola.ScanCallback;
 
 public class MotorolaDatawedgePlugin extends CordovaPlugin {
     
+    protected CordovaResourceApi resourceApi;
     private DataWedgeIntentHandler wedge;
     protected static String TAG = "MotorolaDatawedgePlugin";
+    final static String dwOutputPath =
+            "/enterprise/device/settings/datawedge/autoimport";
+    final static String dwTmpName = "_DatatracForDrivers.profile";
+    final static String dwFinalName = "dwprofile_datatrac4drivers.db";
+
+    private interface FileOp {
+        void run(JSONArray args) throws Exception;
+    }
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView)
     {
         super.initialize(cordova, webView);
+        resourceApi = webView.getResourceApi();
         wedge = new DataWedgeIntentHandler(cordova.getActivity().getBaseContext());
     }
     @Override
@@ -51,6 +66,7 @@ public class MotorolaDatawedgePlugin extends CordovaPlugin {
                         obj.put("barcode", scan.Barcode);
                         PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, obj);
                         pluginResult.setKeepCallback(true);
+                        Log.i(TAG, "drew got barcode");
                         callbackContext.sendPluginResult(pluginResult);
                     } catch(JSONException e){
                         Log.e(TAG, "Error building json object", e);
@@ -98,6 +114,21 @@ public class MotorolaDatawedgePlugin extends CordovaPlugin {
         //register for plugin callbacks
         else if ("switchProfile".equals(action)){
             wedge.switchProfile(args.getString(0));
+        }
+
+        else if ("importProfile".equals(action)) {
+            Log.i(TAG, "drew import profile func" + args.getString(0));
+            Uri srcUri = Uri.parse(args.getString(0));
+            File srcFile = new File(srcUri.getPath());
+            Log.i(TAG, "drew source file found: " + srcFile.exists());
+            threadhelper( new FileOp( ){
+                public void run(JSONArray rawArgs) throws Exception {
+                    copyDataWedgeProfile(rawArgs.getString(0));
+                    //callbackContext.success(entry);
+                }
+            }, args, callbackContext);
+
+            wedge.importProfile(args.getString(0));
         }
 
         else if ("stop".equals(action)){
@@ -148,5 +179,68 @@ public class MotorolaDatawedgePlugin extends CordovaPlugin {
     {
         super.onResume(multitasking);
         wedge.start();
+    }
+
+    private void threadhelper(final FileOp f, final JSONArray args, final CallbackContext callbackContext){
+        cordova.getThreadPool().execute(new Runnable() {
+            public void run() {
+                try {
+                    f.run(args);
+                } catch ( Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void copyDataWedgeProfile(String uri) {
+        try {
+	    Log.i(TAG, "drew started copyu function");
+            Uri srcUri = Uri.parse(uri);
+            CordovaResourceApi.OpenForReadResult ofrr = resourceApi.openForRead(srcUri);
+            File srcFile = new File(srcUri.getPath());
+            InputStream raw = ofrr.inputStream;
+            final File tmpFile = new File(dwOutputPath, dwTmpName);
+            final File finalFile = new File(dwOutputPath, dwFinalName);
+            tmpFile.delete();
+            finalFile.delete();
+
+            // copy the raw data to the internal phone storage
+            try {
+                final OutputStream output = new FileOutputStream(tmpFile);
+                try { 
+                    try {
+                        final byte[] buffer = new byte[4096];
+                        int read;
+
+                        while ((read = raw.read(buffer)) != -1) {
+                            output.write(buffer, 0, read);
+                        }   
+
+                        output.flush();
+                    } finally {
+                        output.close();
+                    }   
+                } catch (Exception e) {
+                    Log.i(TAG,"drew Error Copying datawedge profile");
+                    return;
+                }
+            } finally {
+                raw.close();
+            }   
+
+            // chmod the file permissions of the input file
+            Log.d(TAG, "drew chmod'ing tmp file");
+            tmpFile.setReadable(true, false);
+            tmpFile.setWritable(true, false);
+            tmpFile.setExecutable(true, false);
+
+            // move the file to the output file so it gets imported
+            Log.d(TAG, "drew move tmp file to final");
+            tmpFile.renameTo(finalFile);
+        } catch (Exception e) {
+            Log.d(TAG, e.getMessage());
+            Log.i(TAG, "drew Copying wdatawedge profile", e);
+        }
     }
 }
