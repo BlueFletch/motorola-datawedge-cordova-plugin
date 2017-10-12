@@ -123,6 +123,7 @@ datawedge.importProfile(
 
 4. Once the import is complete, you should be able to go to the Data Wedge Application
 and see your profile there.
+
 5. NOTE: Your application will not recognize the application until after the app has 
 moved to the background and then moved back into the foreground. This is a known Data 
 Wedge problem.
