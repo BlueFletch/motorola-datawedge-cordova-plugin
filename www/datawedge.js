@@ -45,12 +45,12 @@ DataWedge.prototype.switchProfile = function (profileName) {
 
 
 
-DataWedge.prototype.importProfile = function (uri) {
-    if (!uri)  {
-        console.log("DataWedge.importProfile did not include a uri.  A uri is required.");
+DataWedge.prototype.importProfile = function (uri, filename, callback) {
+    if (!uri || !filename)  {
+        console.log("DataWedge.importProfile did not include a uri and or filename. A uri and filename are required.");
         return;
     }
-    exec(null, null, 'MotorolaDataWedge', 'importProfile', [uri]);
+    exec(callback, null, 'MotorolaDataWedge', 'importProfile', [uri, filename]);
 };
 
 /**

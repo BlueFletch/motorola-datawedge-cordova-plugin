@@ -101,6 +101,27 @@ Special configuration for option 2:
 <h5>Magstripe:</h5>
 * Unregister for barcode scans by calling: `datawedge.unregisterMagstripe()`
 
+<h5>Add Custom Profile:</h5>
+* You can export a Datawedge profile of your creation from the Data Wedge app. 
+* Include this file in your Cordova project and include it in your index.jsx file 
+like `import './db/dwprofile_datatrac4drivers.db';` and your profile will be added
+ to your project's www/ folder.
+* Use the cordova helper object to pass the path to your Datawedge profile like this:
+```
+datawedge.importProfile(
+        cordova.file.applicationDirectory + 'www/db/',
+        'dwprofile_datatrac4drivers.db',
+        function () {
+           console.log('callback function');
+        });
+```
+* Once the import is complete, you should be able to go to the Data Wedge Application
+and see your profile there.
+* NOTE: Your application will not recognize the application until after the app has 
+moved to the background and then moved back into the foreground. This is a known Data 
+Wedge problem.
+
+
 ==============
 Copyright 2014 BlueFletch Mobile
 

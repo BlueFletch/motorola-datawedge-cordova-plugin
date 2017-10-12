@@ -124,16 +124,6 @@ public class DataWedgeIntentHandler {
         }
     }
 
-
-    public void importProfile(String uri) {
-        synchronized (stateLock) {
-            Intent profileIntent = new Intent("com.motorolasolutions.emdk.datawedge.api.ACTION_SETDEFAULTPROFILE");
-            profileIntent.putExtra("com.motorolasolutions.emdk.datawedge.api.EXTRA_PROFILENAME", uri);
-
-            applicationContext.sendBroadcast(profileIntent);
-        }
-    }
-
     public void handleIntent(Intent intent){
         if (intent != null) {
 			String action = intent.getAction();
