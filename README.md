@@ -107,6 +107,7 @@ Special configuration for option 2:
 like `import './db/dwprofile_datatrac4drivers.db';` and your profile will be added
  to your project's www/ folder.
 * Use the cordova helper object to pass the path to your Datawedge profile like this:
+
 ```
 datawedge.importProfile(
         cordova.file.applicationDirectory + 'www/db/',
@@ -115,6 +116,7 @@ datawedge.importProfile(
            console.log('callback function');
         });
 ```
+
 * Once the import is complete, you should be able to go to the Data Wedge Application
 and see your profile there.
 * NOTE: Your application will not recognize the application until after the app has 
