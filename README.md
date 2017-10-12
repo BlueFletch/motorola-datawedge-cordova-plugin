@@ -102,11 +102,11 @@ Special configuration for option 2:
 * Unregister for barcode scans by calling: `datawedge.unregisterMagstripe()`
 
 <h5>Add Custom Profile:</h5>
-* You can export a Datawedge profile of your creation from the Data Wedge app.
-* Include this file in your Cordova project and include it in your index.jsx file 
-like `import './db/dwprofile_datatrac4drivers.db';` and your profile will be added
- to your project's www/ folder.
-* Use the cordova helper object to pass the path to your Datawedge profile like this:
+1. You can export a Datawedge profile of your creation from the Data Wedge app.
+2. Include this file in your Cordova project and include it in your index.jsx file like 
+```import './db/dwprofile_datatrac4drivers.db';``` 
+and your profile will be added to your project's www/ folder.
+3. Use the cordova helper object to pass the path to your Datawedge profile like this:
 
 ```
 datawedge.importProfile(
