@@ -91,16 +91,6 @@ DataWedge.prototype.stopScanner = function () {
     exec(null, null, 'MotorolaDataWedge', 'scanner.softScanOff', []);
 };
 
-/**
- * Manually turn off barcode scanner
- */
-DataWedge.prototype.isZebra = function () {
-    exec(null, null, 'MotorolaDataWedge', 'scanner.isZebra', []);
-};
-
-
-
-
 //create instance
 var DataWedge = new DataWedge();
 

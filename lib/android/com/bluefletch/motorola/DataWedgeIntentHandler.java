@@ -25,8 +25,8 @@ public class DataWedgeIntentHandler {
 
     protected Context applicationContext;
 
-    protected String dataWedgeBaseUri = dataWedgeBaseUri + "";
-    
+    protected String dataWedgeBaseUri = "com.bluefletch.motorola.datawedge";
+
     protected static String DEFAULT_ACTION = "com.bluefletch.motorola.datawedge.ACTION";
     protected String dataWedgeAction = DEFAULT_ACTION;
     
@@ -55,6 +55,14 @@ public class DataWedgeIntentHandler {
     public DataWedgeIntentHandler(Context context) {
         TAG = this.getClass().getSimpleName();
         applicationContext = context;
+    }
+
+    public DataWedgeIntentHandler(Context context, String dataWedgeBaseUri) {
+        TAG = this.getClass().getSimpleName();
+        applicationContext = context;
+        this.dataWedgeBaseUri = dataWedgeBaseUri;
+        TRACK_PREFIX_FORMAT = dataWedgeBaseUri + ".msr_track%d";
+        TRACK_STATUS_FORMAT = dataWedgeBaseUri + ".msr_track%d_status";
     }
 
     public void start() {
@@ -139,8 +147,8 @@ public class DataWedgeIntentHandler {
         }
     }
 
-    private static String TRACK_PREFIX_FORMAT = dataWedgeBaseUri + ".msr_track%d";
-    private static String TRACK_STATUS_FORMAT = dataWedgeBaseUri + ".msr_track%d_status";
+    private static String TRACK_PREFIX_FORMAT = "com.bluefletch.motorola.datawedge.msr_track%d";
+    private static String TRACK_STATUS_FORMAT = "com.bluefletch.motorola.datawedge.msr_track%d_status";
     /**
      * Receiver to handle receiving data from intents
      */

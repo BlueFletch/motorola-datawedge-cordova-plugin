@@ -30,12 +30,18 @@ public class MotorolaDatawedgePlugin extends CordovaPlugin {
     
     private DataWedgeIntentHandler wedge;
     protected static String TAG = "MotorolaDatawedgePlugin";
+    protected static String META_DATA_BASEURI = "com.bluefletch.motorola.datawedge.BASEURI";
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView)
     {
         super.initialize(cordova, webView);
-        wedge = new DataWedgeIntentHandler(cordova.getActivity().getBaseContext());
+        String value = MotorolaDatawedgePlugin.getAppSource(cordova.getActivity().getBaseContext(), META_DATA_BASEURI);
+        if (value != null && !"".equals(value)) {
+            wedge = new DataWedgeIntentHandler(cordova.getActivity().getBaseContext(), value);
+        } else {
+            wedge = new DataWedgeIntentHandler(cordova.getActivity().getBaseContext());
+        }
     }
     @Override
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
@@ -152,5 +158,26 @@ public class MotorolaDatawedgePlugin extends CordovaPlugin {
     {
         super.onResume(multitasking);
         wedge.start();
+    }
+
+    /**
+     * @param context eg. cordova.getActivity().getBaseContext()
+     * @param metaName eg. "com.bluefletch.motorola.datawedge.baseuri"
+     * @return the meta-data value as String
+     */
+    public static String getAppSource(Context context, String metaName) {
+        String result = null;
+        try {
+            ApplicationInfo appInfo = context.getPackageManager()
+                    .getApplicationInfo(context.getPackageName(),
+                            PackageManager.GET_META_DATA);
+            if (appInfo.metaData != null) {
+                result = appInfo.metaData.getString(metaName);
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            Log.i(TAG, e.toString());
+        }
+        return result;
     }
 }
