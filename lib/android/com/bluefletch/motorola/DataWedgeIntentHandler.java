@@ -127,7 +127,7 @@ public class DataWedgeIntentHandler {
     public void handleIntent(Intent intent){
         if (intent != null) {
 			String action = intent.getAction();
-			if(action != null && action.equals(DEFAULT_ACTION)) {
+			if(action != null && action.equals(dataWedgeAction)) {
 				dataReceiver.onReceive(applicationContext, intent);
 			}
         }
