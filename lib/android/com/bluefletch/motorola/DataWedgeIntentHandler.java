@@ -112,7 +112,7 @@ public class DataWedgeIntentHandler {
     }
 
     protected void enableScanner(boolean shouldEnable) {
-        Intent enableIntent = new Intent(dataWedgeBaseUri + dataWedgeBaseUri + ".api.ACTION_SCANNERINPUTPLUGIN");
+        Intent enableIntent = new Intent(dataWedgeBaseUri + ".api.ACTION_SCANNERINPUTPLUGIN");
         enableIntent.putExtra(dataWedgeBaseUri + ".api.EXTRA_PARAMETER", 
             shouldEnable ? "ENABLE_PLUGIN" : "DISABLE_PLUGIN");
 

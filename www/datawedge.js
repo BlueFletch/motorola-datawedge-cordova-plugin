@@ -91,6 +91,9 @@ DataWedge.prototype.stopScanner = function () {
     exec(null, null, 'MotorolaDataWedge', 'scanner.softScanOff', []);
 };
 
+
+
+
 //create instance
 var DataWedge = new DataWedge();
 
