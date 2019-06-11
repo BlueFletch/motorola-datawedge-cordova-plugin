@@ -104,6 +104,10 @@ public class MotorolaDatawedgePlugin extends CordovaPlugin {
             wedge.stop();
         }
 
+        else if ("isZebra".equals(action)){
+            wedge.setDataWedgeBaseUri("com.symbol.datawedge");
+        }
+
 
         //start plugin now if not already started
         if ("start".equals(action) || "magstripe.register".equals(action) || "scanner.register".equals(action)) {

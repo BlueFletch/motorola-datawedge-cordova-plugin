@@ -25,8 +25,11 @@ public class DataWedgeIntentHandler {
 
     protected Context applicationContext;
 
+    protected String dataWedgeBaseUri = dataWedgeBaseUri + "";
+    
     protected static String DEFAULT_ACTION = "com.bluefletch.motorola.datawedge.ACTION";
     protected String dataWedgeAction = DEFAULT_ACTION;
+    
     /**
     * This function must be called with the intent Action as configured in the DataWedge Application
     **/
@@ -36,6 +39,9 @@ public class DataWedgeIntentHandler {
         this.dataWedgeAction = action;
     }
 
+    public void setDataWedgeBaseUri(String baseUri) {
+        this.dataWedgeBaseUri = baseUri;
+    }
     protected ScanCallback<BarcodeScan> scanCallback;
     public void setScanCallback(ScanCallback<BarcodeScan> callback){
         scanCallback = callback;
@@ -98,8 +104,8 @@ public class DataWedgeIntentHandler {
     }
 
     protected void enableScanner(boolean shouldEnable) {
-        Intent enableIntent = new Intent("com.motorolasolutions.emdk.datawedge.api.ACTION_SCANNERINPUTPLUGIN");
-        enableIntent.putExtra("com.motorolasolutions.emdk.datawedge.api.EXTRA_PARAMETER", 
+        Intent enableIntent = new Intent(dataWedgeBaseUri + dataWedgeBaseUri + ".api.ACTION_SCANNERINPUTPLUGIN");
+        enableIntent.putExtra(dataWedgeBaseUri + ".api.EXTRA_PARAMETER", 
             shouldEnable ? "ENABLE_PLUGIN" : "DISABLE_PLUGIN");
 
         applicationContext.sendBroadcast(enableIntent);
@@ -107,8 +113,8 @@ public class DataWedgeIntentHandler {
 
     public void startScanning(boolean turnOn) {
         synchronized (stateLock) {
-            Intent scanOnIntent = new Intent("com.motorolasolutions.emdk.datawedge.api.ACTION_SOFTSCANTRIGGER");
-            scanOnIntent.putExtra("com.motorolasolutions.emdk.datawedge.api.EXTRA_PARAMETER", 
+            Intent scanOnIntent = new Intent(dataWedgeBaseUri + ".api.ACTION_SOFTSCANTRIGGER");
+            scanOnIntent.putExtra(dataWedgeBaseUri + ".api.EXTRA_PARAMETER", 
                 turnOn ? "START_SCANNING" : "STOP_SCANNING");
 
             applicationContext.sendBroadcast(scanOnIntent);
@@ -117,8 +123,8 @@ public class DataWedgeIntentHandler {
 
     public void switchProfile(String profile) {
         synchronized (stateLock) {
-            Intent profileIntent = new Intent("com.motorolasolutions.emdk.datawedge.api.ACTION_SETDEFAULTPROFILE");
-            profileIntent.putExtra("com.motorolasolutions.emdk.datawedge.api.EXTRA_PROFILENAME", profile);
+            Intent profileIntent = new Intent(dataWedgeBaseUri + ".api.ACTION_SETDEFAULTPROFILE");
+            profileIntent.putExtra(dataWedgeBaseUri + ".api.EXTRA_PROFILENAME", profile);
 
             applicationContext.sendBroadcast(profileIntent);
         }
@@ -133,8 +139,8 @@ public class DataWedgeIntentHandler {
         }
     }
 
-    private static String TRACK_PREFIX_FORMAT = "com.motorolasolutions.emdk.datawedge.msr_track%d";
-    private static String TRACK_STATUS_FORMAT = "com.motorolasolutions.emdk.datawedge.msr_track%d_status";
+    private static String TRACK_PREFIX_FORMAT = dataWedgeBaseUri + ".msr_track%d";
+    private static String TRACK_STATUS_FORMAT = dataWedgeBaseUri + ".msr_track%d_status";
     /**
      * Receiver to handle receiving data from intents
      */
@@ -143,13 +149,13 @@ public class DataWedgeIntentHandler {
         public void onReceive(Context context, Intent intent) {
             Log.i(TAG, "Data receiver trigged");
             try {
-                if("scanner".equalsIgnoreCase(intent.getStringExtra("com.motorolasolutions.emdk.datawedge.source"))) {
+                if("scanner".equalsIgnoreCase(intent.getStringExtra(dataWedgeBaseUri + ".source"))) {
                     if (scanCallback == null) {
                         Log.e(TAG, "Scan data received, but callback is null.");
                         return;
                     }
-                    String barcode = intent.getStringExtra("com.motorolasolutions.emdk.datawedge.data_string");
-                    String labelType = intent.getStringExtra("com.motorolasolutions.emdk.datawedge.label_type");
+                    String barcode = intent.getStringExtra(dataWedgeBaseUri + ".data_string");
+                    String labelType = intent.getStringExtra(dataWedgeBaseUri + ".label_type");
 
                     scanCallback.execute(new BarcodeScan(labelType, barcode));
                 } else {
