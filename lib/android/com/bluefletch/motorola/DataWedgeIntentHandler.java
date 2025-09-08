@@ -1,3 +1,13 @@
+/*
+    LICENSE NOTICE:
+    The following code was changed from the original repository found at "https://github.com/BlueFletch/motorola-datawedge-cordova-plugin",
+    by bits ag.
+
+    This file, including the changes made by bits ag, is licensed under the
+    Apache License 2.0.
+
+    http://www.apache.org/licenses/LICENSE-2.0
+*/
 package com.bluefletch.motorola;
 
 import android.content.BroadcastReceiver;
@@ -63,7 +73,7 @@ public class DataWedgeIntentHandler {
 
             Log.i(TAG, "Register for Datawedge intent: " + dataWedgeAction);
 
-            applicationContext.registerReceiver(dataReceiver, new IntentFilter(dataWedgeAction));
+            applicationContext.registerReceiver(dataReceiver, new IntentFilter(dataWedgeAction), Context.RECEIVER_EXPORTED);
 
             enableScanner(true);
             hasInitialized = true;
